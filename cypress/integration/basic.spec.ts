@@ -5,8 +5,6 @@ describe('Testes basicos de uma pagina web', () => {
         cy.visit('https://www.wcaquino.me/cypress/componentes.html');
 
         //Verificando o titulo da pagina
-        // const titulo = cy.title();
-        // console.log(titulo);
         cy.title().should('be.equal', "Campo de Treinamento");
 
         //Verifica se contem Campo
@@ -18,6 +16,20 @@ describe('Testes basicos de uma pagina web', () => {
 
         cy.title()
             .should('contain', "Campo")
-            .and('contain' , 'de')
+            .and('contain', 'de')
     });
+
+    it.only('Encontrar e interagir com elemento', () => {
+        cy.visit('https://www.wcaquino.me/cypress/componentes.html');
+
+        cy.get('#buttonSimple').click();
+        cy.get('#buttonSimple').should('have.value', 'Obrigado!')
+
+        cy.get('#buttonSimple')
+            .click()
+            .should('have.value', 'Obrigado!')
+
+    })
+
 });
+
