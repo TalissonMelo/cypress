@@ -33,7 +33,7 @@ describe('Trabalhando com elementos', () => {
         cy.get('#resultado').should('have.text', 'Voltou!');
     })
 
-    it.only('Campos de Textos', () => {
+    it('Campos de Textos', () => {
         cy.get('#formNome').type('Cypress Testes');
         cy.get('#formNome').should('have.value', 'Cypress Testes');
 
@@ -53,5 +53,17 @@ describe('Trabalhando com elementos', () => {
             .clear()
             .type('Erro{selectall}acerto', {delay: 100})
             .should('have.value' , 'acerto');
+    });
+
+    it.only('Radio' , () => {
+        cy.get('#formSexoFem')
+            .click()
+            .should('be.checked');
+
+        cy.get('#formSexoMasc')
+            .should('not.be.checked');
+            
+        //busca pela propriedade name 
+        cy.get("[name='formSexo']").should('have.length', 2);
     })
 })
