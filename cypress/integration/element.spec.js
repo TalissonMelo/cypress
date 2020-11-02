@@ -47,23 +47,35 @@ describe('Trabalhando com elementos', () => {
 
         cy.get('[data-cy=dataSobrenome]')
             .type('teste12345{backspace}{backspace}')
-            .should('have.value' ,'teste123');
+            .should('have.value', 'teste123');
 
         cy.get('#elementosForm\\:sugestoes')
             .clear()
-            .type('Erro{selectall}acerto', {delay: 100})
-            .should('have.value' , 'acerto');
+            .type('Erro{selectall}acerto', { delay: 100 })
+            .should('have.value', 'acerto');
     });
 
-    it.only('Radio' , () => {
+    it('Radio', () => {
         cy.get('#formSexoFem')
             .click()
             .should('be.checked');
 
         cy.get('#formSexoMasc')
             .should('not.be.checked');
-            
+
         //busca pela propriedade name 
         cy.get("[name='formSexo']").should('have.length', 2);
+    })
+
+    it.only('CheckBox', () => {
+        cy.get('#formComidaPizza')
+            .click()
+            .should('be.checked');
+
+        cy.get("[name='formComidaFavorita']").click({multiple: true })
+
+        cy.get('#formComidaPizza').should('not.be.checked')
+        cy.get('#formComidaCarne').should('be.checked')
+
     })
 })
