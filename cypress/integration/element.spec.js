@@ -87,6 +87,6 @@ describe('Trabalhando com elementos', () => {
 
     it.only('Combo Multiplo', () => {
         cy.get('[data-testid=dataEsportes]')
-            .select(['natacao', 'Corrida', 'nada'])
-    })
+            .select(['natacao', 'Corrida', 'nada']);
+    });
 })
