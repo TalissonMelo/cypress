@@ -79,9 +79,14 @@ describe('Trabalhando com elementos', () => {
 
     });
 
-    it.only('Combo', () => {
+    it('Combo', () => {
         cy.get('[data-test=dataEscolaridade]')
-        .select('Superior')
-        .should('have.value', 'superior')
+            .select('Superior')
+            .should('have.value', 'superior')
+    });
+
+    it.only('Combo Multiplo', () => {
+        cy.get('[data-testid=dataEsportes]')
+            .select(['natacao', 'Corrida', 'nada'])
     })
 })
