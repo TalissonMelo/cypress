@@ -7,7 +7,7 @@ describe('Entendendo a espera do Cypress', () => {
         cy.visit('https://www.wcaquino.me/cypress/componentes.html');
     })
 
-    it.only('', () => {
+    it('Deve aguardar elemento disponivel', () => {
 
         cy.get('#novoCampo')
             .should('not.exist')
@@ -22,6 +22,18 @@ describe('Entendendo a espera do Cypress', () => {
             .should('exist')
 
         cy.get('#novoCampo')
+            .type('funciona')
+
+    });
+
+    it.only('Deve fazer retrys', () => {
+
+        cy.get('#buttonDelay')
+            .click()
+
+        cy.get('#novoCampo')
+        //    .should('not.exist')
+            .should('exist')
             .type('funciona')
 
     })
