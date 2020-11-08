@@ -46,7 +46,15 @@ describe('Entendendo a espera do Cypress', () => {
             .should('contain', 'Item 1');
 
         cy.get('#lista li')
-            //    .find('span')
             .should('contain', 'Item 2');
-    })
+    });
+
+    it.only('Usando o Timeout', () => {
+
+        cy.get('#buttonDelay')
+            .click();
+
+        cy.get('#novoCampo')
+            .should('exist');
+    });
 })
