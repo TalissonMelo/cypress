@@ -51,10 +51,23 @@ describe('Entendendo a espera do Cypress', () => {
 
     it.only('Usando o Timeout', () => {
 
-        cy.get('#buttonDelay')
-            .click();
+        // cy.get('#buttonListDOM').click();
+        // cy.get('#lista li', { timeout: 30000 })
+        //     .should('contain', 'Item 1');
 
-        cy.get('#novoCampo')
-            .should('exist');
+        // cy.get('#buttonListDOM').click();
+        // //cy.wait(5000) //Evitar usar,utilizado em casos específicos  
+        // cy.get('#lista li', { timeout: 30000 })
+        //     .should('contain', 'Item 2');
+
+        cy.get('#buttonListDOM').click();
+        cy.get('#lista li')
+            .should('have.length', 1);
+        cy.get('#lista li')
+            .should('have.length',2);
+
+
+        //Tempo padrao de timeout cyprees e 4s
+        //Modificando para outro timeout em todas as bucas modicar o arquivo cyprees.json "defaultCommandTimeout" : 1000
     });
 })
