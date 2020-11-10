@@ -49,7 +49,7 @@ describe('Entendendo a espera do Cypress', () => {
             .should('contain', 'Item 2');
     });
 
-    it.only('Usando o Timeout', () => {
+    it('Usando o Timeout', () => {
 
         // cy.get('#buttonListDOM').click();
         // cy.get('#lista li', { timeout: 30000 })
@@ -70,4 +70,10 @@ describe('Entendendo a espera do Cypress', () => {
         //Tempo padrao de timeout cyprees e 4s
         //Modificando para outro timeout em todas as bucas modicar o arquivo cyprees.json "defaultCommandTimeout" : 1000
     });
+
+    it.only('Click retry', () => {
+        cy.get('#buttonCount')
+            .click()
+            .should('have.length', 1);
+    })
 })
