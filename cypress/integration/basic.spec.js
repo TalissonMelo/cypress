@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 describe('Testes basicos de uma pagina web', () => {
-    it.only('Visitar a pagina', () => {
+    it('Visitar a pagina', () => {
         cy.visit('https://www.wcaquino.me/cypress/componentes.html');
 
         //cy.pause()
@@ -19,6 +19,15 @@ describe('Testes basicos de uma pagina web', () => {
         cy.title()
             .should('contain', "Campo")
             .and('contain', 'de');
+
+        
+        cy.title().then(title => {
+            console.log(title);
+        });
+
+        cy.title().should(title => {
+            console.log(title);
+        })
     });
 
     it('Encontrar e interagir com elemento', () => {
@@ -30,8 +39,6 @@ describe('Testes basicos de uma pagina web', () => {
         cy.get('#buttonSimple')
             .click()
             .should('have.value', 'Obrigado!')
-
-    })
-
+    });
 });
 

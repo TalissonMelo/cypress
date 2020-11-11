@@ -64,7 +64,7 @@ describe('Entendendo a espera do Cypress', () => {
         cy.get('#lista li')
             .should('have.length', 1);
         cy.get('#lista li')
-            .should('have.length',2);
+            .should('have.length', 2);
 
 
         //Tempo padrao de timeout cyprees e 4s
@@ -75,5 +75,20 @@ describe('Entendendo a espera do Cypress', () => {
         cy.get('#buttonCount')
             .click()
             .should('have.length', 1);
+    });
+
+    it.only('Should vs Then', () => {
+
+        // Then aguarda a busca para ser executado
+        cy.get('#buttonListDOM').then(res => {
+            expect(res).to.have.length(1);
+        }).and('have.id', 'buttonListDOM')
+
+        //Faz a busca e ja faz as tentativas fica executando, e ignora o return 
+        cy.get('#buttonListDOM').click();
+        cy.get('#lista li').should(res => {
+         //   return 2;
+            expect(res).to.have.length(1);
+        });
     })
 })
