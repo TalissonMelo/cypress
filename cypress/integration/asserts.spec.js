@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-it('Assertivas de Igualdade', () => {
+it('Assertivas de Igualdade (number, string)', () => {
     const a = 1;
 
     expect(a).equal(1)
@@ -33,12 +33,13 @@ it('Igualdade de Objeto', () => {
     expect(usuario).eq(usuario);
     expect(usuario).to.be.equal(usuario);
 
-    //Verifica as propriedades com deep 
+    //Verifica as propriedades do objeto se sao iguais com deep 
     expect(usuario).to.be.deep.equal({
         id: 1,
         nome: "Talisson Melo"
     })
 
+    //Verifica as propriedades do objeto
     expect(usuario).eql({
         id: 1,
         nome: "Talisson Melo"
@@ -48,6 +49,9 @@ it('Igualdade de Objeto', () => {
     expect(usuario).include({ id: 1 })
 
     //Verificando propriedade
+    expect(usuario).to.have.property('nome')
+
+    //Verificando Propriedade 
     expect(usuario).to.have.property('nome')
 
     //Verificando Propriedade e valor
@@ -60,9 +64,13 @@ it('Igualdade de Objeto', () => {
 it('Verificação de Arrays', () => {
     const arr = [1, 2, 3];
 
+    //Array possua os membros
     expect(arr).to.be.members([1, 2, 3]);
+
+    //Array possua os membros incluidos
     expect(arr).to.includes.members([1, 3]);
     expect(arr).to.not.be.empty
+    expect([]).to.be.empty
 });
 
 it('Verificação de Tipos', () => {
@@ -107,6 +115,9 @@ it('Verificação de Números', () => {
 
     expect(number).to.be.equal(10);
     expect(float).to.be.equal(5.2123);
+
+    //Número aproximado
+    expect(float).to.be.closeTo(5.2, 0.1);
 
     //Número acima de 
     expect(number).to.be.above(3);
