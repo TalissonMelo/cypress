@@ -73,7 +73,7 @@ describe('Trabalhando com elementos', () => {
             .click()
             .should('be.checked');
 
-        cy.get("[name='formComidaFavorita']").click({multiple: true })
+        cy.get("[name='formComidaFavorita']").click({ multiple: true })
 
         cy.get('#formComidaPizza').should('not.be.checked')
         cy.get('#formComidaCarne').should('be.checked')
@@ -83,11 +83,38 @@ describe('Trabalhando com elementos', () => {
     it('Combo', () => {
         cy.get('[data-test=dataEscolaridade]')
             .select('Superior')
-            .should('have.value', 'superior')
+            .should('have.value', 'superior');
+
+        cy.get('[data-test=dataEscolaridade]')
+            .select('1graucomp')
+            .should('have.value', '1graucomp');
+
+        cy.get('[data-test=dataEscolaridade] option')
+            .should('have.length', 8);
+
+        cy.get('[data-test=dataEscolaridade] option').then($arr => {
+            const values = [];
+            $arr.each(function () {
+                values.push(this.innerHTML)
+            })
+            expect(values).to.include.members(['Superior', 'Mestrado']);
+        })
     });
 
     it.only('Combo Multiplo', () => {
         cy.get('[data-testid=dataEsportes]')
             .select(['natacao', 'Corrida', 'nada']);
+
+        //Cuidado ao usar o  .should('have.value)
+        // cy.get('[data-testid=dataEsportes]').should('have.value', ['natacao', 'Corrida', 'nada']);
+
+        cy.get('[data-testid=dataEsportes]').then($el => {
+            expect($el.val()).to.be.deep.equal(['natacao', 'Corrida', 'nada'])
+            expect($el.val()).to.have.length(3);
+        });
+
+        cy.get('[data-testid=dataEsportes]')
+            .invoke('val')
+            .should('eql', ['natacao', 'Corrida', 'nada']);
     });
 })
