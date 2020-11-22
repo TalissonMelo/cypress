@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 describe('Testes basicos de uma pagina web', () => {
-    it('Visitar a pagina', () => {
+    it.only('Visitar a pagina', () => {
         cy.visit('https://www.wcaquino.me/cypress/componentes.html');
 
         //cy.pause()
@@ -25,8 +25,20 @@ describe('Testes basicos de uma pagina web', () => {
             console.log(title);
         });
 
-        cy.title().should(title => {
-            console.log(title);
+        let syncTitle;
+
+        cy.title().then(title => {
+            cy.get('#formNome').type(title);
+            syncTitle = title;
+        });
+
+        cy.get('[data-cy=dataSobrenome]').then($el => {
+            $el.val(syncTitle);
+        });
+
+        //Quando tem ( : 2 pontos) colocar duas barras antes dele 
+        cy.get('#elementosForm\\:sugestoes').then($el => {
+            cy.wrap($el).type(syncTitle)
         })
     });
 
