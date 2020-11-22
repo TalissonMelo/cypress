@@ -38,11 +38,28 @@ describe('Helpers...', () => {
         cy.wrap(obj).should('have.property', 'nome', 'Talisson');
         cy.wrap(obj).its('nome').should('be.equal', 'Talisson');
 
-        const obj2 = { nome: 'Talisson', idade: 25 , endereco: {rua: 'Rua 02' , bairro : 'Ouro Verde'}}
+        const obj2 = { nome: 'Talisson', idade: 25, endereco: { rua: 'Rua 02', bairro: 'Ouro Verde' } }
         cy.wrap(obj2).its('endereco').should('have.property', 'bairro', 'Ouro Verde');
-        cy.wrap(obj2).its('endereco').its('rua').should('contain', 'Rua 02' );
+        cy.wrap(obj2).its('endereco').its('rua').should('contain', 'Rua 02');
 
         cy.visit('https://www.wcaquino.me/cypress/componentes.html');
         cy.title().its('length').should('be.equal', 20);
+    });
+
+    it.only('Invoke...', () => {
+        const getValue = () => 1;
+        const soma = (a,b) => a + b;
+
+
+        cy.wrap({ fn: getValue }).invoke('fn').should('be.equal', 1);
+        cy.wrap({ fn: soma }).invoke('fn', 2 ,5).should('be.equal', 7);
+
+        cy.visit('https://www.wcaquino.me/cypress/componentes.html');
+        cy.get('#formNome').invoke('val', 'Texto via envoke');
+        cy.window().invoke('alert', 'Dá pra ver ?');
+        
+        cy.get('#resultado')
+            .invoke('html', '<input type="button" value="hached!" />')
+
     });
 })

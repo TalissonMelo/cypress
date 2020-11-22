@@ -20,7 +20,7 @@ describe('Testes basicos de uma pagina web', () => {
             .should('contain', "Campo")
             .and('contain', 'de');
 
-        
+        //Imprimir log no console
         cy.title().then(title => {
             console.log(title);
         });
@@ -36,6 +36,7 @@ describe('Testes basicos de uma pagina web', () => {
         cy.get('#buttonSimple').click();
         cy.get('#buttonSimple').should('have.value', 'Obrigado!')
 
+        //escrevendo em campo de texto 
         cy.get('#buttonSimple')
             .click()
             .should('have.value', 'Obrigado!')
