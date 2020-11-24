@@ -15,5 +15,13 @@ describe('Trabalhando com alerta',() => {
             console.log(msg);
             expect(msg).to.be.equal('Alert Simples');
         })
+    });
+
+    it.only('Alert com mock', () => {
+        const stub = cy.stub().as('Alerta')
+        cy.on('window:alert',stub)
+        cy.get('#alert').click().then(() => {
+            expect(stub.getCall(0)).to.be.calledWith('Alert Simples')
+        })
     })
 })
