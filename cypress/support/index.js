@@ -18,3 +18,8 @@ import './commands'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+
+//Redefinir a prioridade dos seletores adcionando o ID como padrão
+Cypress.SelectorPlayground.defaults({
+    selectorPriority: ['id', 'class', 'attributes', 'data-cy', 'data-test', 'data-testid', 'tag' ,'nth-child']
+});
