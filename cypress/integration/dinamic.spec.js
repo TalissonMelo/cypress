@@ -21,4 +21,32 @@ describe('Trabalhando com testes dinamicos', () => {
 
         });
     });
+
+    it('Deve selecionar todos', () => {
+        cy.get('#formNome').type('Tales')
+        cy.get('#formSobrenome').type('Mello')
+        cy.get(`[name=formSexo][value=M]`).click();
+        cy.get('[name=formComidaFavorita]').click({ multiple: true });
+        cy.get('#formEscolaridade').select('Doutorado')
+        cy.get('#formEsportes').select('Corrida');
+
+        cy.clickAlert('#formCadastrar', 'Tem certeza que voce eh vegetariano?').click()
+    })
+
+    it.only('Deve selecionar todos usando o each', () => {
+        cy.get('#formNome').type('Tales')
+        cy.get('#formSobrenome').type('Mello')
+        cy.get(`[name=formSexo][value=M]`).click();
+
+        cy.get('[name=formComidaFavorita]').each($el => {
+
+            if ($el.val() != 'vegetariano')
+                cy.wrap($el).click()
+        });
+
+        cy.get('#formEscolaridade').select('Doutorado')
+        cy.get('#formEsportes').select('Corrida');
+
+        //cy.clickAlert('#formCadastrar', 'Tem certeza que voce eh vegetariano?').click()
+    })
 });
