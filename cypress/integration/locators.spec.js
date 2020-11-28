@@ -17,7 +17,8 @@ describe('Trabalhando com elementos', () => {
         cy.get("[onclick*='Francisco']")
     });
 
+    //https://www.red-gate.com/simple-talk/dotnet/net-framework/xpath-css-dom-and-selenium-the-rosetta-stone/
     it.only('Usando cypress-xpath', () => {
-       cy.xpath('//input')
+       cy.xpath("//input[contains(@onclick,'Francisco')]");
     })
 });
