@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 describe('Trabalhando com alerta', () => {
-    before(() => {
+    beforeEach(() => {
         cy.visit('https://www.wcaquino.me/cypress/componentes.html');
     });
 
@@ -18,5 +18,11 @@ describe('Trabalhando com alerta', () => {
         cy.clock(dt.getTime())
         cy.get('#buttonNow').click();
         cy.get('#resultado > span').should('contain', '10/04/2012')
-    })
+    });
+
+    it.only('Testando tempo corrido', () =>{
+        cy.get('#buttonTimePassed').click()
+        cy.get('#resultado > span').should('contain', '16065')
+        cy.get('#resultado > span').invoke('text').should('gt', '1606579928980')
+    });
 })
