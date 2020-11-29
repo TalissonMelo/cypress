@@ -17,5 +17,16 @@ describe('Testes Funcionais', () => {
             .should('have.value', 'Conta Teste Cypress');
         cy.get('.btn').click();
         cy.get('.toast-message').should('contain', 'Conta inserida com sucesso')
+    });
+
+    it.only('Deve alterar uma conta', () => {
+        cy.get('[data-test=menu-settings]').click()
+        cy.get('[href="/contas"]').click()
+        cy.xpath("//table//td[contains(., 'Conta Alterada')]/..//i[@class='far fa-edit']").click();
+        cy.get('[data-test=nome]')
+            .clear()
+            .type('Conta Alterada com sucesso');
+        cy.get('.btn').click();
+        cy.get('.toast-message').should('contain', 'Conta atualizada com sucesso!')
     })
 });
