@@ -36,10 +36,17 @@ describe('Testes Funcionais', () => {
         cy.get(loc.MENU.MOVIMENTACAO).click();
         cy.get(loc.MOVIMENTACAO.DESCRICAO).type('Desc');
         cy.get(loc.MOVIMENTACAO.VALOR).type('1.99');
-        cy.get(loc.MOVIMENTACAO.INTERESSADO).type('Fernando Torres');
+        cy.get(loc.MOVIMENTACAO.INTERESSADO).type('Inter');
+        cy.get(loc.MOVIMENTACAO.CONTA).select('Conta Alterada com sucesso')
+        cy.get(loc.MOVIMENTACAO.STATUS).click()
         cy.get(loc.MOVIMENTACAO.BTN_SALVAR_MOV).click();
         cy.get(loc.MESSAGE).should('contain', 'sucesso');
 
         cy.get(loc.EXTRATO.LINHAS).should('have.length', 7);
     });
+
+    it('Deve obter o saldo', () => {
+        cy.get(loc.MENU.HOME).click()
+        cy.xpath(loc.SALDO.FN_XP_SALDO_CONTA('Conta Alterada com sucesso')).should('contain', '1')
+    })
 });
