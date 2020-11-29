@@ -4,11 +4,8 @@ import loc from '../../support/locators'
 
 describe('Testes Funcionais', () => {
     before(() => {
-        cy.visit('http://barrigareact.wcaquino.me');
-        cy.get(loc.LOGIN.USER).type('TA@');
-        cy.get(loc.LOGIN.PASSWORD).type('123');
-        cy.get(loc.LOGIN.BTN_LOGIN).click();
-        cy.get(loc.MESSAGE).should('contain', 'Bem vindo')
+       cy.login('TA@','123');
+       cy.resetApp();
     })
 
     it('Deve inserir uma conta', () => {
