@@ -24,6 +24,6 @@ require('cypress-xpath')
 
 //Redefinir a prioridade dos seletores adcionando o ID como padrão
 Cypress.SelectorPlayground.defaults({
-    selectorPriority: ['id', 'class', 'attributes', 'data-cy', 'data-test', 'data-testid', 'tag' ,'nth-child']
+    selectorPriority: ['data-wc', 'data-cy', 'data-test', 'data-testid', 'id', 'class', 'attributes', 'tag', 'nth-child']
 });
 
