@@ -48,5 +48,12 @@ describe('Testes Funcionais', () => {
     it('Deve obter o saldo', () => {
         cy.get(loc.MENU.HOME).click()
         cy.xpath(loc.SALDO.FN_XP_SALDO_CONTA('Conta Alterada com sucesso')).should('contain', '1')
+    });
+
+    it('Deve remover movimentacao', () => {
+        cy.get(loc.MENU.EXTRATO).click()
+        cy.xpath(loc.EXTRATO.FN_XP_REMOVER_EMENTO('Desc')).click();
+        cy.get(loc.MESSAGE).should('contain', 'sucesso');
+
     })
 });
