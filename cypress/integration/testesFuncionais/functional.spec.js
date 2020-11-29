@@ -7,7 +7,7 @@ describe('Testes Funcionais', () => {
     before(() => {
         cy.login('TA@', '123');
         cy.resetApp();
-    })
+    });
 
     it('Deve inserir uma conta', () => {
         cy.acessarMenuConta();
@@ -23,12 +23,23 @@ describe('Testes Funcionais', () => {
             .type('Conta Alterada com sucesso');
         cy.get(loc.CONTAS.BTN_SALVAR).click();
         cy.get(loc.MESSAGE).should('contain', 'Conta atualizada com sucesso!')
-    })
+    });
 
     it('Não deve inserir conta com mesmo nome!.', () => {
         cy.acessarMenuConta();
         cy.get(loc.CONTAS.NOME).type('Conta Alterada com sucesso');
         cy.get(loc.CONTAS.BTN_SALVAR).click()
         cy.get(loc.MESSAGE).should('contain', 'code 400')
-    })
+    });
+
+    it('Deve inserir movimentacao', () => {
+        cy.get(loc.MENU.MOVIMENTACAO).click();
+        cy.get(loc.MOVIMENTACAO.DESCRICAO).type('Desc');
+        cy.get(loc.MOVIMENTACAO.VALOR).type('1.99');
+        cy.get(loc.MOVIMENTACAO.INTERESSADO).type('Fernando Torres');
+        cy.get(loc.MOVIMENTACAO.BTN_SALVAR_MOV).click();
+        cy.get(loc.MESSAGE).should('contain', 'sucesso');
+
+        cy.get(loc.EXTRATO.LINHAS).should('have.length', 7);
+    });
 });
