@@ -9,14 +9,14 @@ describe('Testes de API', () => {
     });
 
     beforeEach(() => {
-        // cy.resetApp();
+        cy.resetarBaseDados();
     })
 
-    it.only('Deve inserir uma conta', () => {
+    it('Deve inserir uma conta', () => {
         cy.request({
             method: 'POST',
             headers: { Authorization: `JWT ${token}` },
-            url: 'http://barrigarest.wcaquino.me/contas',
+            url: '/contas',
             body: {
                 nome: "Conta testes API"
             }

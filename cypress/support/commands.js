@@ -49,7 +49,7 @@ Cypress.Commands.add('resetApp', () => {
 Cypress.Commands.add('getToken', (usuario, senha) => {
     cy.request({
         method: 'POST',
-        url: 'http://barrigarest.wcaquino.me/signin',
+        url: '/signin',
         body: {
             email: usuario,
             redirecionar: false,
@@ -58,6 +58,16 @@ Cypress.Commands.add('getToken', (usuario, senha) => {
     }).its('body.token').should('not.be.empty')
     .then(token => {
         return token
-    })
+    });
+})
 
+Cypress.Commands.add('resetarBaseDados', () =>{
+    cy.getToken('TA@','123').then(token => {
+        
+        cy.request({
+            method: 'GET',
+            headers: { Authorization: `JWT ${token}` },
+            url: '/reset',
+        }).its('status').should('to.be.equal', 200);
+    })
 })
