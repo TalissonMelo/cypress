@@ -30,6 +30,37 @@ describe('Testes de API', () => {
     });
 
     it('Deve alterar uma conta', () => {
+        // cy.request({
+        //     method: 'PUT',
+        //     headers: { Authorization: `JWT ${token}` },
+        //     url: '/contas/40977',
+        //     body: {
+        //         nome: "Conta alterada via Rest testes API"
+        //     }
+        // }).as('response')
+
+        // cy.get('@response').then(res => {
+        //     expect(res.status).to.be.equal(200);
+        // });
+
+        cy.request({
+            method: 'GET',
+            headers: { Authorization: `JWT ${token}` },
+            url: '/contas',
+            qs: "Conta testes API",
+            body: {
+                nome: "Conta alterada via Rest testes API"
+            }
+        }).then(res => {
+            cy.request({
+                method: 'PUT',
+                headers: { Authorization: `JWT ${token}` },
+                url: `/contas/${res.body[0].id}`,
+                body: {
+                    nome: "Conta alterada via Rest testes API"
+                }
+            }).as('response')
+        });
     });
 
     it('Não deve inserir conta com mesmo nome!.', () => {
