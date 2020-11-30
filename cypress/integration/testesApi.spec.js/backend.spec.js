@@ -1,8 +1,10 @@
 /// <reference types="cypress" />
 
 describe('Testes de API', () => {
+
+    let token
     before(() => {
-        // cy.login('TA@', '123');
+        cy.getToken('TA@', '123').then(tkn => { token = tkn })
 
     });
 
@@ -10,39 +12,15 @@ describe('Testes de API', () => {
         // cy.resetApp();
     })
 
-    it('Login', () => {
-        //Metodos de requisições para API
-        cy.request({
-            method: 'POST',
-            url: 'http://barrigarest.wcaquino.me/signin',
-            body: {
-                email: "TA@",
-                redirecionar: false,
-                senha: "123"
-            }
-        }).its('body.token').should('not.be.empty');
-    })
-
     it.only('Deve inserir uma conta', () => {
         cy.request({
             method: 'POST',
-            url: 'http://barrigarest.wcaquino.me/signin',
+            headers: { Authorization: `JWT ${token}` },
+            url: 'http://barrigarest.wcaquino.me/contas',
             body: {
-                email: "TA@",
-                redirecionar: false,
-                senha: "123"
+                nome: "Conta testes API"
             }
-        }).its('body.token').should('not.be.empty')
-            .then(token => {
-            cy.request({
-                method: 'POST',
-                headers: { Authorization: `JWT ${token}` },
-                url: 'http://barrigarest.wcaquino.me/contas',
-                body: {
-                    nome: "Conta testes API"
-                }
-            }).as('response')
-        })
+        }).as('response')
 
         cy.get('@response').then(res => {
             expect(res.status).to.be.equal(201)
