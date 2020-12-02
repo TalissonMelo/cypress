@@ -56,18 +56,36 @@ Cypress.Commands.add('getToken', (usuario, senha) => {
             senha: senha
         }
     }).its('body.token').should('not.be.empty')
-    .then(token => {
-        return token
-    });
+        .then(token => {
+            return token
+        });
 })
 
-Cypress.Commands.add('resetarBaseDados', () =>{
-    cy.getToken('TA@','123').then(token => {
-        
+Cypress.Commands.add('resetarBaseDados', () => {
+    cy.getToken('TA@', '123').then(token => {
+
         cy.request({
             method: 'GET',
             headers: { Authorization: `JWT ${token}` },
             url: '/reset',
         }).its('status').should('to.be.equal', 200);
+    })
+});
+
+Cypress.Commands.add('getContaNome', nome => {
+    cy.getToken('TA@', '123').then(token => {
+
+        cy.request({
+            method: 'GET',
+            headers: { Authorization: `JWT ${token}` },
+            url: '/contas',
+            qs: "Conta testes API",
+            body: {
+                nome: nome
+            }
+        }).then(res => {
+            return res.body[0].id;
+        })
+
     })
 })

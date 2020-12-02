@@ -30,19 +30,11 @@ describe('Testes de API', () => {
     });
 
     it('Deve alterar uma conta', () => {
-        cy.request({
-            method: 'GET',
-            headers: { Authorization: `JWT ${token}` },
-            url: '/contas',
-            qs: "Conta testes API",
-            body: {
-                nome: "Conta alterada via Rest testes API"
-            }
-        }).then(res => {
+        cy.getContaNome('Conta alterada via Rest testes API').then(contaId => {
             cy.request({
                 method: 'PUT',
                 headers: { Authorization: `JWT ${token}` },
-                url: `/contas/${res.body[0].id}`,
+                url: `/contas/${contaId}`,
                 body: {
                     nome: "Conta alterada via Rest testes API"
                 }
@@ -50,7 +42,7 @@ describe('Testes de API', () => {
         });
     });
 
-    it.only('Não deve inserir conta com mesmo nome!.', () => {
+    it('Não deve inserir conta com mesmo nome!.', () => {
         cy.request({
             method: 'POST',
             headers: { Authorization: `JWT ${token}` },
@@ -68,6 +60,29 @@ describe('Testes de API', () => {
     });
 
     it('Deve inserir movimentacao', () => {
+
+        cy.getContaNome('Conta para movimentações').then(contaId => {
+            cy.request({
+                method: 'POST',
+                headers: { Authorization: `JWT ${token}` },
+                url: '/transacoes',
+                body: {
+                    conta_id: contaId,
+                    data_pagamento: Cypress.moment().add({days: 1}).format('DD/MM/YYYY'),
+                    data_transacao: Cypress.moment().format('DD/MM/YYYY'),
+                    descricao: "Descrição ",
+                    envolvido: "Interessado...",
+                    status: true,
+                    tipo: "REC",
+                    valor: "100",
+                },
+                failOnStatusCode: false
+            }).as('response')
+        });
+
+        cy.get('@response').its('status').should('be.equal', 201)
+        cy.get('@response').its('body.id').should('exist')
+
     });
 
     it('Deve obter o saldo', () => {
