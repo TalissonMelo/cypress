@@ -100,6 +100,18 @@ describe('Testes de API', () => {
         })
     });
 
-    it('Deve remover movimentacao', () => {
+    it.only('Deve remover movimentacao', () => {
+        cy.request({
+            url: '/transacoes',
+            method: 'GET',
+            headers: { Authorization: `JWT ${token}` },
+            qs: { descricao : 'Movimentacao para exclusao'}
+        }).then(res => {
+            cy.request({
+                url: `/transacoes/${res.body[0].id}`,
+                method: 'DELETE',
+                headers: { Authorization: `JWT ${token}` },
+            }).its('status').should('be.equal', 204)
+        })
     })
 });
