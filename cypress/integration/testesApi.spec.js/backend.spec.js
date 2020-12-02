@@ -68,7 +68,7 @@ describe('Testes de API', () => {
                 url: '/transacoes',
                 body: {
                     conta_id: contaId,
-                    data_pagamento: Cypress.moment().add({days: 1}).format('DD/MM/YYYY'),
+                    data_pagamento: Cypress.moment().add({ days: 1 }).format('DD/MM/YYYY'),
                     data_transacao: Cypress.moment().format('DD/MM/YYYY'),
                     descricao: "Descrição ",
                     envolvido: "Interessado...",
@@ -85,7 +85,19 @@ describe('Testes de API', () => {
 
     });
 
-    it('Deve obter o saldo', () => {
+    it.only('Deve obter o saldo', () => {
+        cy.request({
+            url: '/contas',
+            method: 'GET',
+            headers: { Authorization: `JWT ${token}` },
+        }).then(res => {
+            let saldoConta = null;
+            res.body.forEach(conta => {
+                if(conta.conta === 'Conta para saldo'){
+                    saldoConta = conta.saldo
+                }
+            });
+        })
     });
 
     it('Deve remover movimentacao', () => {
