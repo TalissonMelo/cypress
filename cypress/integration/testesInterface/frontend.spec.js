@@ -3,6 +3,12 @@
 import '../../support/commandsContas'
 
 describe('Testes Funcionais', () => {
+
+    after(() => {
+        cy.clearLocalStorage();
+    })
+
+
     before(() => {
         cy.server()
         cy.route({
