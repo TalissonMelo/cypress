@@ -77,7 +77,7 @@ describe('Testes Interface', () => {
         cy.get(loc.MESSAGE).should('contain', 'code 400')
     });
 
-    it.only('Deve inserir movimentacao', () => {
+    it('Deve inserir movimentacao', () => {
 
         cy.route({
             method: 'POST',
