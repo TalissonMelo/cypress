@@ -54,6 +54,5 @@ describe('Testes Funcionais', () => {
         cy.get(loc.MENU.EXTRATO).click()
         cy.xpath(loc.EXTRATO.FN_XP_REMOVER_EMENTO('Desc')).click();
         cy.get(loc.MESSAGE).should('contain', 'sucesso');
-
     })
 });

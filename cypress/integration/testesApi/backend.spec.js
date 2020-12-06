@@ -85,7 +85,7 @@ describe('Testes de API', () => {
 
     });
 
-    it.only('Deve obter o saldo', () => {
+    it('Deve obter o saldo', () => {
         cy.request({
             url: '/contas',
             method: 'GET',
@@ -100,7 +100,7 @@ describe('Testes de API', () => {
         })
     });
 
-    it.only('Deve remover movimentacao', () => {
+    it('Deve remover movimentacao', () => {
         cy.request({
             url: '/transacoes',
             method: 'GET',

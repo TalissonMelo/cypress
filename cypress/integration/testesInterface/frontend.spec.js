@@ -98,7 +98,7 @@ describe('Testes Interface', () => {
 
     });
 
-    it.only('Deve obter o saldo', () => {
+    it('Deve obter o saldo', () => {
 
         cy.route({
             method: 'GET',
@@ -122,9 +122,17 @@ describe('Testes Interface', () => {
         })
 
         cy.get(loc.MENU.HOME).click()
-        cy.xpath(loc.SALDO.FN_XP_SALDO_CONTA("Movimentacao para extrato"))
     });
 
     it('Deve remover movimentacao', () => {
+
+        cy.route({
+            method: 'DELETE',
+            url: '/transacoes/**',
+            response: {},
+            status: 204
+        }).as('Del')
+
+        cy.xpath(loc.EXTRATO.FN_XP_REMOVER_EMENTO('Desc')).click();
     })
 });
