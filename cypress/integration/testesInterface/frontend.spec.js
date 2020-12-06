@@ -62,7 +62,7 @@ describe('Testes Interface', () => {
         cy.get(loc.MESSAGE).should('contain', 'Conta atualizada com sucesso!')
     });
 
-    it.only('Não deve inserir conta com mesmo nome!.', () => {
+    it('Não deve inserir conta com mesmo nome!.', () => {
 
         cy.route({
             method: 'POST',
@@ -77,7 +77,25 @@ describe('Testes Interface', () => {
         cy.get(loc.MESSAGE).should('contain', 'code 400')
     });
 
-    it('Deve inserir movimentacao', () => {
+    it.only('Deve inserir movimentacao', () => {
+
+        cy.route({
+            method: 'POST',
+            url: '/transacoes',
+            response: {"id":311145,"descricao":"Movimentação Falsa","envolvido":"Interessado Falso","observacao":null,"tipo":"REC","data_transacao":"2020-12-06T03:00:00.000Z","data_pagamento":"2020-12-06T03:00:00.000Z","valor":"23.00","status":true,"conta_id":341198,"usuario_id":12501,"transferencia_id":null,"parcelamento_id":null}
+        }).as('SalvarMovimentação');
+
+        cy.get(loc.MENU.MOVIMENTACAO).click();
+        cy.get(loc.MOVIMENTACAO.DESCRICAO).type('Desc');
+        cy.get(loc.MOVIMENTACAO.VALOR).type('1.99');
+        cy.get(loc.MOVIMENTACAO.INTERESSADO).type('Inter');
+        cy.get(loc.MOVIMENTACAO.CONTA).select('Conta falsa')
+        cy.get(loc.MOVIMENTACAO.STATUS).click()
+        cy.get(loc.MOVIMENTACAO.BTN_SALVAR_MOV).click();
+        cy.get(loc.MESSAGE).should('contain', 'sucesso');
+
+        cy.get(loc.EXTRATO.LINHAS).should('have.length', 7);
+
     });
 
     it('Deve obter o saldo', () => {
