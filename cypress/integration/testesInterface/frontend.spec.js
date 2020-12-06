@@ -62,7 +62,19 @@ describe('Testes Interface', () => {
         cy.get(loc.MESSAGE).should('contain', 'Conta atualizada com sucesso!')
     });
 
-    it('Não deve inserir conta com mesmo nome!.', () => {
+    it.only('Não deve inserir conta com mesmo nome!.', () => {
+
+        cy.route({
+            method: 'POST',
+            url: '/contas',
+            response: { error: "Já existe uma conta com esse nome!" },
+            status: 400
+        }).as('SalvarContaMesmoNome');
+
+        cy.acessarMenuConta();
+        cy.get(loc.CONTAS.NOME).type('Conta falsa movimentação');
+        cy.get(loc.CONTAS.BTN_SALVAR).click()
+        cy.get(loc.MESSAGE).should('contain', 'code 400')
     });
 
     it('Deve inserir movimentacao', () => {
