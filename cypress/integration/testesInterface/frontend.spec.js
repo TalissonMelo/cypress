@@ -82,7 +82,7 @@ describe('Testes Interface', () => {
         cy.route({
             method: 'POST',
             url: '/transacoes',
-            response: {"id":311145,"descricao":"Movimentação Falsa","envolvido":"Interessado Falso","observacao":null,"tipo":"REC","data_transacao":"2020-12-06T03:00:00.000Z","data_pagamento":"2020-12-06T03:00:00.000Z","valor":"23.00","status":true,"conta_id":341198,"usuario_id":12501,"transferencia_id":null,"parcelamento_id":null}
+            response: { "id": 311145, "descricao": "Movimentação Falsa", "envolvido": "Interessado Falso", "observacao": null, "tipo": "REC", "data_transacao": "2020-12-06T03:00:00.000Z", "data_pagamento": "2020-12-06T03:00:00.000Z", "valor": "23.00", "status": true, "conta_id": 341198, "usuario_id": 12501, "transferencia_id": null, "parcelamento_id": null }
         }).as('SalvarMovimentação');
 
         cy.get(loc.MENU.MOVIMENTACAO).click();
@@ -98,7 +98,31 @@ describe('Testes Interface', () => {
 
     });
 
-    it('Deve obter o saldo', () => {
+    it.only('Deve obter o saldo', () => {
+
+        cy.route({
+            method: 'GET',
+            url: '/transacoes',
+            response: {
+                "conta": "Conta para extrato",
+                "id": 311151,
+                "descricao": "Movimentacao para extrato",
+                "envolvido": "FFF",
+                "observacao": null,
+                "tipo": "DESP",
+                "data_transacao": "2020-12-06T03:00:00.000Z",
+                "data_pagamento": "2020-12-06T03:00:00.000Z",
+                "valor": "-220.00",
+                "status": true,
+                "conta_id": 342189,
+                "usuario_id": 12501,
+                "transferencia_id": null,
+                "parcelamento_id": null
+            }
+        })
+
+        cy.get(loc.MENU.HOME).click()
+        cy.xpath(loc.SALDO.FN_XP_SALDO_CONTA("Movimentacao para extrato"))
     });
 
     it('Deve remover movimentacao', () => {
